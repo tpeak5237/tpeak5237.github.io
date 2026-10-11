@@ -38,3 +38,17 @@ function activatePath(path) {
 for (const button of document.querySelectorAll('[data-path]')) {
   button.addEventListener('click', () => activatePath(button.dataset.path));
 }
+
+// Keep the navigation indicator tied to the selected same-page destination.
+const portfolioNavLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')];
+function markCurrentSection() {
+  const selected = window.location.hash || '#work';
+  for (const link of portfolioNavLinks) {
+    const current = link.getAttribute('href') === selected;
+    link.classList.toggle('is-active', current);
+    if (current) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  }
+}
+window.addEventListener('hashchange', markCurrentSection);
+markCurrentSection();

@@ -65,6 +65,16 @@ require("prefers-reduced-motion:reduce" in CSS, "Missing reduced-motion design")
 require("aria-pressed" in PAGE and "aria-live" in PAGE and "activatePath" in JS, "Interaction is not accessible or not wired")
 require("not a working ai agent" in README.lower(), "README must disclose proposal-only status")
 
+
+# Navigation and headline regression checks for the editorial hero redesign.
+require('<mark class="hero-highlight">unnecessarily</mark>' in PAGE, "Blue headline highlight missing")
+require('building in bangkok' in PAGE and 'BKK UTC+7' in PAGE, "Reference header metadata missing")
+require('id="about"' in PAGE, "About navigation target missing")
+for anchor in ('#work', '#evidence', '#proposal', '#principles', '#about'):
+    require(f'href="{anchor}"' in PAGE, f"Missing navigation destination {anchor}")
+require('markCurrentSection' in JS, "Section navigation state not wired")
+require('@media(max-width:360px)' in CSS, "Narrow-screen nav treatment missing")
+
 for problem in problems:
     print("FAIL:", problem)
 if problems:
