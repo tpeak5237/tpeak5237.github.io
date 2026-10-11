@@ -1,0 +1,17 @@
+name: Static portfolio checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check site structure and evidence boundaries
+        run: python3 scripts/verify.py
